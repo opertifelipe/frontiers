@@ -41,13 +41,13 @@ def main(argv):
 
     ## Training keywords
     # train_embeddings_keyword_word2vec(df_train)
-    train_embeddings_keyword_tfidf(df_train)
+    # train_embeddings_keyword_tfidf(df_train)
 
     ## Training document
     # train_embeddings_document_word2vec(df_train)
     
     ## Evaluation Baseline
-    #generate_baseline_evaluation(df_test)
+    # generate_baseline_evaluation(df_test)
 
     ### Evaluate keyword 
     # evaluate_keyword_word2vec(df_test)

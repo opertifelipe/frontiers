@@ -62,8 +62,8 @@ def generate_baseline_evaluation(df_test):
     IO(eval_report, filename="evaluation_baseline",folder="05_report",format_="json").save()
 
 
-def predict(df, embeddings_function, embedding_type, journal_embeddings):
-    df = embeddings_function(df, embedding_type)
+def predict(df, embeddings_function, embedding_type, journal_embeddings, tf_idf_training=True):
+    df = embeddings_function(df, embedding_type, tf_idf_training)
     df = df.reset_index(drop=True)
     predictions = []
     for index, row in df.iterrows():
@@ -92,24 +92,13 @@ def evaluate_keyword_tfidf(df_test):
     journal_embeddings = IO(filename="journals_embeddings_keywords_tfidf",folder="04_model",format_="pickle").load()
     df_evaluation = predict(df=df_test, 
                             embeddings_function=create_embeddings_keywords,
-                            embedding_type="word2vec",
+                            embedding_type="tfidf",
+                            tf_idf_training=False,
                             journal_embeddings=journal_embeddings)
     
     evaluation = generate_evaluation_report(df_evaluation["journal"].tolist(),
                                            df_evaluation["prediction"].tolist())
-    IO(evaluation, filename="evaluation_keywords_word2vec",folder="05_report",format_="json").save()
-
-def evaluate_keyword_tfidf(df_test):
-    journal_embeddings = IO(filename="journals_embeddings_keywords_word2vec",folder="04_model",format_="pickle").load()
-    df_evaluation = predict(df=df_test, 
-                            embeddings_function=create_embeddings_keywords,
-                            embedding_type="word2vec",
-                            journal_embeddings=journal_embeddings)
-    
-    evaluation = generate_evaluation_report(df_evaluation["journal"].tolist(),
-                                           df_evaluation["prediction"].tolist())
-    IO(evaluation, filename="evaluation_keywords_word2vec",folder="05_report",format_="json").save()
-
+    IO(evaluation, filename="evaluation_keywords_tfidf",folder="05_report",format_="json").save()
 
 def evaluate_document_word2vec(df_test):
     journal_embeddings = IO(filename="journals_embeddings_document_word2vec",folder="04_model",format_="pickle").load()

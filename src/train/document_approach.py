@@ -5,7 +5,7 @@ def get_embeddings_document_word2vec(text):
     doc = nlp(text)
     return doc.vector
 
-def create_embeddings_document(df, embedding_type):
+def create_embeddings_document(df, embedding_type, tf_idf_training = True):
     if embedding_type == "word2vec":
         #df["embeddings"] = df["preprocessed_text"].parallel_apply(get_embeddings_document_word2vec)
         df["embeddings"] = df["text"].parallel_apply(get_embeddings_document_word2vec)

@@ -18,10 +18,12 @@ def create_embeddings_keywords(df, embedding_type, tf_idf_training = True):
     elif embedding_type == "tfidf":
         if tf_idf_training:
             vectorizer = TfidfVectorizer(max_features=5000)
-        else:
-            vectorizer = IO("journals_embeddings_keywords_vectorizer_tfidf","04_model","pickle").load()
-        df["sentence"] = df["keywords_cleaned"].parallel_apply(get_sentence_keyword_tfidf)
-        df["embeddings"] = list(vectorizer.fit_transform(df["sentence"].values).toarray())
-        if tf_idf_training:
+            df["sentence"] = df["keywords_cleaned"].parallel_apply(get_sentence_keyword_tfidf)
+            df["embeddings"] = list(vectorizer.fit_transform(df["sentence"].values).toarray())   
             IO(vectorizer, "journals_embeddings_keywords_vectorizer_tfidf","04_model","pickle").save()
+        else:
+            vectorizer = IO(filename="journals_embeddings_keywords_vectorizer_tfidf",folder="04_model",format_="pickle").load()
+            df["sentence"] = df["keywords_cleaned"].parallel_apply(get_sentence_keyword_tfidf)
+            df["embeddings"] = list(vectorizer.transform(df["sentence"].values).toarray())   
+
     return df    
