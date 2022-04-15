@@ -18,5 +18,5 @@ services:
     volumes:
       - ./data:/data
     depends_on:
-      - api_frontiers
+      - api
 
