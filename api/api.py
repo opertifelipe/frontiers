@@ -52,4 +52,4 @@ def create_item(paper: ScientificPaper):
         elif paper.model == "sbert":
             df_predicted = predict_document_sbert(df)
 
-    return {"journal":df_predicted["prediction"].tolist()}
+    return {"journals_recommendation":df_predicted["prediction"].tolist()[0]}

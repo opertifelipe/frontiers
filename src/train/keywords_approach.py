@@ -6,7 +6,6 @@ from sentence_transformers import SentenceTransformer
 from functools import partial
 import torch
 
-
 def get_embeddings_keyword_word2vec(list_of_keywords):
     vectors = []
     for key in list_of_keywords:
