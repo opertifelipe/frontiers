@@ -44,3 +44,8 @@ def train_embeddings_document_tfidf(df_train):
     journal_embeddings = create_journal_emebeddings(df_train)
     IO(journal_embeddings, "journals_embeddings_document_tfidf","04_model","pickle").save()
 
+
+def train_embeddings_document_sbert(df_train):
+    df_train = create_embeddings_document(df_train, "sbert")
+    journal_embeddings = create_journal_emebeddings(df_train)
+    IO(journal_embeddings, "journals_embeddings_document_sbert","04_model","pickle").save()

@@ -16,7 +16,7 @@ def get_embeddings_keyword_word2vec(list_of_keywords):
 def get_sentence_keyword_tfidf(list_of_keywords):
     return " ".join(list_of_keywords)
 
-def get_embeddings_keyword_sbert(model, list_of_keywords):
+def get_embeddings_keyword_sbert(list_of_keywords,model):
     embeddings = model.encode(list_of_keywords)
     doc_embeddings_bert = np.mean(embeddings, axis=0)
     return doc_embeddings_bert

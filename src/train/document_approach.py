@@ -2,10 +2,18 @@ import numpy as np
 from utils.utils import nlp
 from sklearn.feature_extraction.text import TfidfVectorizer
 from utils.utils import IO
+from sentence_transformers import SentenceTransformer
+from functools import partial
+
 
 def get_embeddings_document_word2vec(text):
     doc = nlp(text)
     return doc.vector
+
+def get_embeddings_document_sbert(text, model):
+    sentences = text.split(". ")
+    embeddings = model.encode(sentences)
+    return np.mean(embeddings, axis=0)
 
 def create_embeddings_document(df, embedding_type, tf_idf_training = True):
     if embedding_type == "word2vec":
@@ -21,5 +29,8 @@ def create_embeddings_document(df, embedding_type, tf_idf_training = True):
             vectorizer = IO(filename="journals_embeddings_document_vectorizer_tfidf",folder="04_model",format_="pickle").load()
             # df["embeddings"] = list(vectorizer.transform(df["preprocessed_text"].values).toarray())   
             df["embeddings"] = list(vectorizer.transform(df["text"].values).toarray())   
+    elif embedding_type == "sbert":
+        model = SentenceTransformer("all-mpnet-base-v2", device='cuda')
+        df["embeddings"] = df["text"].apply(partial(get_embeddings_document_sbert, model=model))
 
     return df    
