@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from src.utils.utils import IO
 from sentence_transformers import SentenceTransformer
 from functools import partial
-
+import torch
 
 def get_embeddings_document_word2vec(text):
     doc = nlp(text)
@@ -30,7 +30,10 @@ def create_embeddings_document(df, embedding_type, tf_idf_training = True):
             # df["embeddings"] = list(vectorizer.transform(df["preprocessed_text"].values).toarray())   
             df["embeddings"] = list(vectorizer.transform(df["text"].values).toarray())   
     elif embedding_type == "sbert":
-        model = SentenceTransformer("all-mpnet-base-v2", device='cuda')
+        if torch.cuda.is_available():
+            model = SentenceTransformer("all-mpnet-base-v2", device='cuda')
+        else:
+            model = SentenceTransformer("all-mpnet-base-v2")                        
         df["embeddings"] = df["text"].apply(partial(get_embeddings_document_sbert, model=model))
 
     return df    

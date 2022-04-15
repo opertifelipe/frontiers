@@ -4,6 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from src.utils.utils import IO
 from sentence_transformers import SentenceTransformer
 from functools import partial
+import torch
 
 
 def get_embeddings_keyword_word2vec(list_of_keywords):
@@ -35,6 +36,9 @@ def create_embeddings_keywords(df, embedding_type, tf_idf_training = True):
             df["sentence"] = df["keywords_cleaned"].parallel_apply(get_sentence_keyword_tfidf)
             df["embeddings"] = list(vectorizer.transform(df["sentence"].values).toarray())   
     elif embedding_type == "sbert":
-        model = SentenceTransformer("all-mpnet-base-v2", device='cuda')
+        if torch.cuda.is_available():
+            model = SentenceTransformer("all-mpnet-base-v2", device='cuda')
+        else:
+            model = SentenceTransformer("all-mpnet-base-v2")       
         df["embeddings"] = df["keywords_cleaned"].apply(partial(get_embeddings_keyword_sbert, model=model))
     return df    

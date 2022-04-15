@@ -75,74 +75,95 @@ def predict(df, embeddings_function, embedding_type, journal_embeddings, tf_idf_
                       journal_embeddings["journal"][idx[2]]]
         predictions.append(prediction)
     df["prediction"] = predictions
-    return df    
+    return df
 
-def evaluate_keyword_word2vec(df_test):
+def predict_keyword_word2vec(df_test):    
     journal_embeddings = IO(filename="journals_embeddings_keywords_word2vec",folder="04_model",format_="pickle").load()
     df_evaluation = predict(df=df_test, 
                             embeddings_function=create_embeddings_keywords,
                             embedding_type="word2vec",
                             journal_embeddings=journal_embeddings)
-    
+    return df_evaluation
+
+def evaluate_keyword_word2vec(df_test):
+    df_evaluation = predict_keyword_word2vec(df_test)
     evaluation = generate_evaluation_report(df_evaluation["journal"].tolist(),
                                            df_evaluation["prediction"].tolist())
     IO(evaluation, filename="evaluation_keywords_word2vec",folder="05_report",format_="json").save()
 
-def evaluate_keyword_tfidf(df_test):
+
+def predict_keyword_tfidf(df_test):
     journal_embeddings = IO(filename="journals_embeddings_keywords_tfidf",folder="04_model",format_="pickle").load()
     df_evaluation = predict(df=df_test, 
                             embeddings_function=create_embeddings_keywords,
                             embedding_type="tfidf",
                             tf_idf_training=False,
                             journal_embeddings=journal_embeddings)
-    
+    return df_evaluation
+
+def evaluate_keyword_tfidf(df_test): 
+    df_evaluation = predict_keyword_tfidf(df_test)
     evaluation = generate_evaluation_report(df_evaluation["journal"].tolist(),
                                            df_evaluation["prediction"].tolist())
     IO(evaluation, filename="evaluation_keywords_tfidf",folder="05_report",format_="json").save()
 
-def evaluate_keyword_sbert(df_test):
+
+def predict_keyword_sbert(df_test):
     journal_embeddings = IO(filename="journals_embeddings_keywords_sbert",folder="04_model",format_="pickle").load()
     df_evaluation = predict(df=df_test, 
                             embeddings_function=create_embeddings_keywords,
                             embedding_type="sbert",
                             journal_embeddings=journal_embeddings)
-    
+
+    return df_evaluation
+
+def evaluate_keyword_sbert(df_test):
+    df_evaluation = predict_keyword_sbert(df_test)
     evaluation = generate_evaluation_report(df_evaluation["journal"].tolist(),
                                            df_evaluation["prediction"].tolist())
     IO(evaluation, filename="evaluation_keywords_sbert",folder="05_report",format_="json").save()
 
 
-def evaluate_document_word2vec(df_test):
+def predict_document_word2vec(df_test):
     journal_embeddings = IO(filename="journals_embeddings_document_word2vec",folder="04_model",format_="pickle").load()
     df_evaluation = predict(df=df_test, 
                             embeddings_function=create_embeddings_document,
                             embedding_type="word2vec",
                             journal_embeddings=journal_embeddings)
-    
+    return df_evaluation
+
+def evaluate_document_word2vec(df_test):
+    df_evaluation = predict_document_word2vec(df_test)
     evaluation = generate_evaluation_report(df_evaluation["journal"].tolist(),
                                            df_evaluation["prediction"].tolist())
     IO(evaluation, filename="evaluation_document_word2vec",folder="05_report",format_="json").save()
 
-def evaluate_document_tfidf(df_test):
+
+def predict_document_tfidf(df_test):
     journal_embeddings = IO(filename="journals_embeddings_document_tfidf",folder="04_model",format_="pickle").load()
     df_evaluation = predict(df=df_test, 
                             embeddings_function=create_embeddings_document,
                             embedding_type="tfidf",
                             tf_idf_training=False,
                             journal_embeddings=journal_embeddings)
-    
+    return df_evaluation
+
+def evaluate_document_tfidf(df_test):
+    df_evaluation = predict_document_tfidf(df_test)
     evaluation = generate_evaluation_report(df_evaluation["journal"].tolist(),
                                            df_evaluation["prediction"].tolist())
     IO(evaluation, filename="evaluation_document_tfidf",folder="05_report",format_="json").save()
 
-
-def evaluate_document_sbert(df_test):
+def predict_document_sbert(df_test):
     journal_embeddings = IO(filename="journals_embeddings_document_sbert",folder="04_model",format_="pickle").load()
     df_evaluation = predict(df=df_test, 
                             embeddings_function=create_embeddings_document,
                             embedding_type="sbert",
                             journal_embeddings=journal_embeddings)
-    
+    return df_evaluation
+
+def evaluate_document_sbert(df_test):
+    df_evaluation = predict_document_sbert(df_test)
     evaluation = generate_evaluation_report(df_evaluation["journal"].tolist(),
                                            df_evaluation["prediction"].tolist())
     IO(evaluation, filename="evaluation_document_sbert",folder="05_report",format_="json").save()

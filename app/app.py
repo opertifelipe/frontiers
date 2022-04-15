@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import fitz
 import requests
-
+import json
 
 st.title('Frontiers Journal Recommendation')
 
@@ -37,12 +37,16 @@ mapping_model = {'SBERT':'sbert', 'TFIDF':'tfidf', 'Word2Vec':'word2vec'}
 mapping_embedding_type = {'All document':'document', 'Only keywords':'keywords'}
 
 if text:
-    url = "https://http://127.0.0.1:8082/"
+    url = "http://127.0.0.1:8082/journal/recommendation"
 
-    payload = {"text":text, }
-    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    payload = {"text":text, 
+               "model":mapping_model[model], 
+               "embedding_type":mapping_embedding_type[embedding_type]}
 
-    response = requests.request("POST", url, data=payload, headers=headers)
+
+    response = requests.request("POST", url, data=json.dumps(payload))
+
+    st.write(response.text)
 
 
 
