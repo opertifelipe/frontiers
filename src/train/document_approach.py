@@ -1,7 +1,7 @@
 import numpy as np
-from utils.utils import nlp
+from src.utils.utils import nlp
 from sklearn.feature_extraction.text import TfidfVectorizer
-from utils.utils import IO
+from src.utils.utils import IO
 from sentence_transformers import SentenceTransformer
 from functools import partial
 

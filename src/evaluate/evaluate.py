@@ -3,9 +3,9 @@ from sklearn.metrics import classification_report
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import pandas as pd
-from utils.utils import IO
-from train.keywords_approach import create_embeddings_keywords
-from train.document_approach import create_embeddings_document
+from src.utils.utils import IO
+from src.train.keywords_approach import create_embeddings_keywords
+from src.train.document_approach import create_embeddings_document
 
 def check_in(row):
     if row["y_true"] in row["y_pred"]:

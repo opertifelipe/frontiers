@@ -1,5 +1,5 @@
 import sys
-from train.train import (train_test,
+from src.train.train import (train_test,
                         train_embeddings_keyword_word2vec,
                         train_embeddings_document_word2vec,
                         train_embeddings_keyword_tfidf,
@@ -7,15 +7,15 @@ from train.train import (train_test,
                         train_embeddings_keyword_sbert,
                         train_embeddings_document_sbert
                         )                        
-from preprocess.preprocess import filter_papers_min_sample, preprocess
-from evaluate.evaluate import (evaluate_document_word2vec, 
+from src.preprocess.preprocess import filter_papers_min_sample, preprocess
+from src.evaluate.evaluate import (evaluate_document_word2vec, 
                                evaluate_keyword_word2vec,
                                evaluate_keyword_tfidf,
                                evaluate_document_tfidf,
                                evaluate_keyword_sbert,
                                evaluate_document_sbert)
 
-from utils.utils import load_data, IO
+from src.utils.utils import load_data, IO
 from pandarallel import pandarallel
 
 import warnings
@@ -70,8 +70,8 @@ def main(argv):
     ## Evaluate document
     # evaluate_document_word2vec(df_test)
     # evaluate_document_tfidf(df_test)
-    if env == "gpu":
-        evaluate_document_sbert(df_test)
+    # if env == "gpu":
+    #     evaluate_document_sbert(df_test)
 
 
 

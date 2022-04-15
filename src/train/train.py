@@ -1,8 +1,8 @@
 from sklearn.model_selection import train_test_split
-from train.keywords_approach import create_embeddings_keywords
-from train.document_approach import create_embeddings_document
+from src.train.keywords_approach import create_embeddings_keywords
+from src.train.document_approach import create_embeddings_document
 
-from utils.utils import IO
+from src.utils.utils import IO
 
 def train_test(df_subset):
     X_train, X_test, y_train, y_test = train_test_split(df_subset[["id","text"]],df_subset["journal"].values, 
