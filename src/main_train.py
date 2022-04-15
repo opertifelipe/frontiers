@@ -12,7 +12,8 @@ from evaluate.evaluate import (evaluate_document_word2vec,
                                evaluate_keyword_word2vec,
                                evaluate_keyword_tfidf,
                                evaluate_document_tfidf,
-                               evaluate_keyword_sbert)
+                               evaluate_keyword_sbert,
+                               evaluate_document_sbert)
 
 from utils.utils import load_data, IO
 from pandarallel import pandarallel
@@ -54,8 +55,8 @@ def main(argv):
     ## Training document
     # train_embeddings_document_word2vec(df_train)
     # train_embeddings_document_tfidf(df_train)
-    if env == "gpu":
-        train_embeddings_document_sbert(df_train)
+    # if env == "gpu":
+    #     train_embeddings_document_sbert(df_train)
 
     ## Evaluation Baseline
     # generate_baseline_evaluation(df_test)
@@ -69,6 +70,8 @@ def main(argv):
     ## Evaluate document
     # evaluate_document_word2vec(df_test)
     # evaluate_document_tfidf(df_test)
+    if env == "gpu":
+        evaluate_document_sbert(df_test)
 
 
 
