@@ -45,7 +45,6 @@ def clean_keywords(row):
         return row["keywords"]    
 
 def preprocess(df):
-    _, df = filter_papers_min_sample(df)
     df["preprocessed_text"] = df["text"].parallel_apply(preprocess_text)
     df["keywords"] = df["text"].parallel_apply(find_keywords_rule_based)
     df["keywords_len"] = df["keywords"].parallel_apply(lambda x: len(x))   
