@@ -40,7 +40,7 @@ mapping_model = {'SBERT':'sbert', 'TFIDF':'tfidf', 'Word2Vec':'word2vec'}
 mapping_embedding_type = {'All document':'document', 'Only keywords':'keywords'}
 
 if text:
-    url = "http://127.0.0.1:8082/journal/recommendation"
+    url = "http://api:8000/journal/recommendation"
     payload = {"text":text, 
                "model":mapping_model[model], 
                "embedding_type":mapping_embedding_type[embedding_type]}
@@ -48,11 +48,13 @@ if text:
 
     response = requests.request("POST", url, data=json.dumps(payload)).json()
     st.markdown(f"""
-    **1. Recommendation**: {response["journals_recommendation"][0]}
-
-    **2. Recommendation**: {response["journals_recommendation"][1]}
-
-    **3. Recommendation**: {response["journals_recommendation"][2]}""", unsafe_allow_html=False)
+    **Recommendation:**: 
+    
+    1. *{response["journals_recommendation"][0]}*
+    2. *{response["journals_recommendation"][1]}*    
+    3. *{response["journals_recommendation"][2]}*""", 
+    
+    unsafe_allow_html=False)
 
 
 

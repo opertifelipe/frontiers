@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    image: api_frontiers
+    volumes:
+      - ./data:/data
+
+  app:
+    build:
+      context: .
+      dockerfile: app.Dockerfile
+    image: app_frontiers
+    ports:
+      - 8501:8501
+    volumes:
+      - ./data:/data
+    depends_on:
+      - api_frontiers
+
