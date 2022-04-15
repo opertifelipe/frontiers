@@ -29,7 +29,18 @@ def train_embeddings_keyword_tfidf(df_train):
     journal_embeddings = create_journal_emebeddings(df_train)
     IO(journal_embeddings, "journals_embeddings_keywords_tfidf","04_model","pickle").save()
 
+def train_embeddings_keyword_sbert(df_train):
+    df_train = create_embeddings_keywords(df_train, "sbert")
+    journal_embeddings = create_journal_emebeddings(df_train)
+    IO(journal_embeddings, "journals_embeddings_keywords_sbert","04_model","pickle").save()
+
 def train_embeddings_document_word2vec(df_train):
     df_train = create_embeddings_document(df_train, "word2vec")
     journal_embeddings = create_journal_emebeddings(df_train)
     IO(journal_embeddings, "journals_embeddings_document_word2vec","04_model","pickle").save()
+
+def train_embeddings_document_tfidf(df_train):
+    df_train = create_embeddings_document(df_train, "tfidf")
+    journal_embeddings = create_journal_emebeddings(df_train)
+    IO(journal_embeddings, "journals_embeddings_document_tfidf","04_model","pickle").save()
+

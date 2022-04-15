@@ -2,12 +2,16 @@ import sys
 from train.train import (train_test,
                         train_embeddings_keyword_word2vec,
                         train_embeddings_document_word2vec,
-                        train_embeddings_keyword_tfidf
+                        train_embeddings_keyword_tfidf,
+                        train_embeddings_document_tfidf,
+                        train_embeddings_keyword_sbert
                         )                        
 from preprocess.preprocess import filter_papers_min_sample, preprocess
 from evaluate.evaluate import (evaluate_document_word2vec, 
                                evaluate_keyword_word2vec,
-                               evaluate_keyword_tfidf)
+                               evaluate_keyword_tfidf,
+                               evaluate_document_tfidf)
+
 from utils.utils import load_data, IO
 from pandarallel import pandarallel
 
@@ -42,20 +46,23 @@ def main(argv):
     ## Training keywords
     # train_embeddings_keyword_word2vec(df_train)
     # train_embeddings_keyword_tfidf(df_train)
+    if env == "gpu":
+        train_embeddings_keyword_sbert(df_train)
 
     ## Training document
     # train_embeddings_document_word2vec(df_train)
-    
+    # train_embeddings_document_tfidf(df_train)
+
     ## Evaluation Baseline
     # generate_baseline_evaluation(df_test)
 
     ### Evaluate keyword 
     # evaluate_keyword_word2vec(df_test)
-    evaluate_keyword_tfidf(df_test)
+    # evaluate_keyword_tfidf(df_test)
 
     ## Evaluate document
     # evaluate_document_word2vec(df_test)
-
+    # evaluate_document_tfidf(df_test)
 
 
 

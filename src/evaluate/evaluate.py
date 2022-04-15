@@ -110,3 +110,15 @@ def evaluate_document_word2vec(df_test):
     evaluation = generate_evaluation_report(df_evaluation["journal"].tolist(),
                                            df_evaluation["prediction"].tolist())
     IO(evaluation, filename="evaluation_document_word2vec",folder="05_report",format_="json").save()
+
+def evaluate_document_tfidf(df_test):
+    journal_embeddings = IO(filename="journals_embeddings_document_tfidf",folder="04_model",format_="pickle").load()
+    df_evaluation = predict(df=df_test, 
+                            embeddings_function=create_embeddings_document,
+                            embedding_type="tfidf",
+                            tf_idf_training=False,
+                            journal_embeddings=journal_embeddings)
+    
+    evaluation = generate_evaluation_report(df_evaluation["journal"].tolist(),
+                                           df_evaluation["prediction"].tolist())
+    IO(evaluation, filename="evaluation_document_tfidf",folder="05_report",format_="json").save()
