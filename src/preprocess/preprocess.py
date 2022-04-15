@@ -5,15 +5,12 @@ import string
 import nltk
 import re
 from summa import keywords
-from pandarallel import pandarallel
 
 
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
 nltk.download('omw-1.4')
-
-pandarallel.initialize()
 
 def filter_papers_min_sample(df):
     documents_per_journal = df.groupby(["journal"]).size().sort_values(ascending=False)
