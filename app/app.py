@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import fitz
+import requests
+
 
 st.title('Frontiers Journal Recommendation')
 
@@ -30,6 +32,18 @@ model = st.selectbox(
 embedding_type = st.radio("Select the embedding type", 
                                 ["All document","Only keywords"], 
                                 index=1)     
+
+mapping_model = {'SBERT':'sbert', 'TFIDF':'tfidf', 'Word2Vec':'word2vec'}
+mapping_embedding_type = {'All document':'document', 'Only keywords':'keywords'}
+
+if text:
+    url = "https://http://127.0.0.1:8082/"
+
+    payload = {"text":text, }
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+
+    response = requests.request("POST", url, data=payload, headers=headers)
+
 
 
 
