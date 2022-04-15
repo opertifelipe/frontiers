@@ -4,6 +4,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import pandas as pd
 from utils.utils import IO
+from train.keywords_approach import create_embeddings_keywords
+from train.document_approach import create_embeddings_document
 
 def check_in(row):
     if row["y_true"] in row["y_pred"]:
@@ -74,4 +76,26 @@ def predict(df, embeddings_function, embedding_type, journal_embeddings):
         predictions.append(prediction)
     df["prediction"] = predictions
     return df    
+
+def evaluate_keyword_word2vec(df_test):
+    journal_embeddings = IO(filename="journals_embeddings_keywords_word2vec",folder="04_model",format_="pickle").load()
+    df_evaluation = predict(df=df_test, 
+                            embeddings_function=create_embeddings_keywords,
+                            embedding_type="word2vec",
+                            journal_embeddings=journal_embeddings)
     
+    evaluation = generate_evaluation_report(df_evaluation["journal"].tolist(),
+                                           df_evaluation["prediction"].tolist())
+    IO(evaluation, filename="evaluation_keywords_word2vec",folder="05_report",format_="json").save()
+
+
+def evaluate_document_word2vec(df_test):
+    journal_embeddings = IO(filename="journals_embeddings_document_word2vec",folder="04_model",format_="pickle").load()
+    df_evaluation = predict(df=df_test, 
+                            embeddings_function=create_embeddings_document,
+                            embedding_type="word2vec",
+                            journal_embeddings=journal_embeddings)
+    
+    evaluation = generate_evaluation_report(df_evaluation["journal"].tolist(),
+                                           df_evaluation["prediction"].tolist())
+    IO(evaluation, filename="evaluation_document_word2vec",folder="05_report",format_="json").save()

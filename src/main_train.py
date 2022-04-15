@@ -2,10 +2,9 @@ import sys
 from train.train import (train_test,
                         train_embeddings_keyword_word2vec,
                         train_embeddings_document_word2vec
-                        )
-from train.keywords_approach import create_embeddings_keywords                        
+                        )                        
 from preprocess.preprocess import filter_papers_min_sample, preprocess
-from evaluate.evaluate import predict, generate_evaluation_report, generate_baseline_evaluation
+from evaluate.evaluate import evaluate_document_word2vec, evaluate_keyword_word2vec
 from utils.utils import load_data, IO
 from pandarallel import pandarallel
 
@@ -41,23 +40,17 @@ def main(argv):
     # train_embeddings_keyword_word2vec(df_train)
 
     ## Training document
-    train_embeddings_document_word2vec(df_train)
+    #train_embeddings_document_word2vec(df_train)
     
 
     ## Evaluation Baseline
     #generate_baseline_evaluation(df_test)
 
     ### Evaluate keyword 
-    ## Word2Vec
-    # journal_embeddings = IO(filename="journals_embeddings_keywords_word2vec",folder="04_model",format_="pickle").load()
-    # df_evaluation = predict(df=df_test, 
-    #                         embeddings_function=create_embeddings_keywords,
-    #                         embedding_type="word2vec",
-    #                         journal_embeddings=journal_embeddings)
-    
-    # evaluation = generate_evaluation_report(df_evaluation["journal"].tolist(),
-    #                                        df_evaluation["prediction"].tolist())
-    # IO(evaluation, filename="evaluation_keywords_word2vec",folder="05_report",format_="json").save()
+    #evaluate_keyword_word2vec(df_test)
+
+    ## Evaluate document
+    evaluate_document_word2vec(df_test)
 
 
 
