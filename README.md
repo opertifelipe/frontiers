@@ -47,7 +47,7 @@ export PYTHONPATH=<your project path>
 
 The deployed algorithm is SBERT. During the training phase, SBERT performs better than all the other algorithms. Unfortunately, it is also the slowest. In case the application will need a fast response time, probably the best option will be the TFIDF.
 
-In order to build and deploy the services you should have installed `docker` and `docker-compose` and run: 
+In order to build and deploy the service you should have installed `docker` and `docker-compose` and run: 
 ```
 docker-compose build
 docker-compose -d up
