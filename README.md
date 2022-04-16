@@ -39,11 +39,12 @@ The source folderis divided as:
 - `evaluate/`: all the functions and algorithm to evaluate the journals embeddings.
 - `utils/`: some utils like Input/Output class.
 
-## Using docker
-
 # Deployment
 
+
 ```
-docker run -v /home/operti/inda/frontiers/data/:/app/data/ -p 8501:8501 app_frontiers
+docker-compose build
+docker-compose -d up
+
 ```
 
