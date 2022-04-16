@@ -5,9 +5,10 @@
 
 ## Using docker
 
-```
-sudo docker build -t train_frontiers -f train.Dockerfile --build-arg DEVICE=gpu .
-```
 
 # Deployment
+
+```
+docker run -v /home/operti/inda/frontiers/data/:/app/data/ -p 8501:8501 app_frontiers
+```
 

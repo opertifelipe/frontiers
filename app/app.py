@@ -28,7 +28,7 @@ else:
                 text += page.get_text()
 
 if st.button('Find recommended journals'):
-    url = "http://api:8086/journal/recommendation"
+    url = "http://api:8000/journal/recommendation"
     payload = {"text":text}
     
     response = requests.request("POST", url, data=json.dumps(payload)).json()
