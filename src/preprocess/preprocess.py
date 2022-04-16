@@ -1,6 +1,5 @@
 from nltk import word_tokenize
 from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
 import string
 import nltk
 import re
@@ -27,11 +26,10 @@ def find_keywords_rule_based(s):
     return keywords_list
 
 def preprocess_text(text):
-    lemmatizer = WordNetLemmatizer()    
     word_to_remove = ["google", "scholar"]
     text = re.sub(r'[^a-zA-Z]', ' ', text)
     stop = set(stopwords.words('english') + list(string.punctuation))
-    preprocessed_text = " ".join([lemmatizer.lemmatize(word) for word in word_tokenize(text.lower()) if (word not in stop) and (len(word) > 3) and (word not in word_to_remove)])
+    preprocessed_text = " ".join([word for word in word_tokenize(text.lower()) if (word not in stop) and (len(word) > 3) and (word not in word_to_remove)])
     return preprocessed_text
 
 def clean_keywords(row):

@@ -2,12 +2,12 @@ from typing import Optional
 
 from fastapi import FastAPI
 from pydantic import BaseModel
-from src.evaluate.evaluate import (predict_keyword_word2vec, 
-                                   predict_keyword_tfidf,
-                                   predict_keyword_sbert,
-                                   predict_document_word2vec,
-                                   predict_document_tfidf,
-                                   predict_document_sbert)
+from api.core.predict import (predict_keyword_word2vec, 
+                                predict_keyword_tfidf,
+                                predict_keyword_sbert,
+                                predict_document_word2vec,
+                                predict_document_tfidf,
+                                predict_document_sbert)
 
 from src.preprocess.preprocess import preprocess
 
@@ -34,7 +34,7 @@ def read_root():
 
 
 @app.post("/journal/recommendation")
-def create_item(paper: ScientificPaper):
+async def journal_recommendation(paper: ScientificPaper):
     df = pd.DataFrame([[paper.text]], columns=["text"])
     df = preprocess(df)
     if paper.embedding_type == "keywords":

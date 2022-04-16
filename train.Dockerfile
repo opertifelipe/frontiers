@@ -1,10 +1,10 @@
 FROM python:3.8
 
-ARG DEVICE
+WORKDIR /app 
 
-COPY ./src /src
-COPY ./requirements.txt /requirements.txt
+COPY ./src /app/src
+COPY ./requirements_train.txt /app/requirements_train.txt
+ENV PYTHONPATH "/app/"
+RUN pip install -r requirements_train.txt
 
-RUN pip install -r requirements.txt
-
-CMD "python src/main_train.py ${DEVICE}"
+CMD ["python","src/main_train.py"]

@@ -24,13 +24,7 @@ warnings.filterwarnings("ignore")
 
 pandarallel.initialize(progress_bar=True)
 
-def main(argv):
-    ## Setup
-    if len(argv)  == 1:
-        env = argv[0]
-    else:
-        env = "cpu"
-    assert env in ["cpu","gpu"]
+def main():
 
     df = load_data()
     
@@ -50,14 +44,12 @@ def main(argv):
     ## Training keywords
     train_embeddings_keyword_word2vec(df_train)
     train_embeddings_keyword_tfidf(df_train)
-    if env == "gpu":
-        train_embeddings_keyword_sbert(df_train)
+    train_embeddings_keyword_sbert(df_train)
 
     ## Training document
     train_embeddings_document_word2vec(df_train)
     train_embeddings_document_tfidf(df_train)
-    if env == "gpu":
-        train_embeddings_document_sbert(df_train)
+    train_embeddings_document_sbert(df_train)
 
     ## Evaluation Baseline
     generate_baseline_evaluation(df_test)
@@ -65,14 +57,12 @@ def main(argv):
     ## Evaluate keyword 
     evaluate_keyword_word2vec(df_test)
     evaluate_keyword_tfidf(df_test)
-    if env == "gpu":
-        evaluate_keyword_sbert(df_test)
+    evaluate_keyword_sbert(df_test)
 
     ## Evaluate document
     evaluate_document_word2vec(df_test)
     evaluate_document_tfidf(df_test)
-    if env == "gpu":
-        evaluate_document_sbert(df_test)
+    evaluate_document_sbert(df_test)
         
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
