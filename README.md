@@ -41,7 +41,7 @@ The source folderis divided as:
 
 # Deployment
 
-The deployed algorithm is SBERT because it is tested algorithm with the best performance. Unfortunaly, it is also the slowest, therefore in case the application will need a fast response time, probably the best option will be the TFIDF.
+The deployed algorithm is SBERT. During the training phase SBERT perfomerd better than all the other algorithms. Unfortunaly, it is also the slowest. In case the application will need a fast response time, probably the best option will be the TFIDF.
 
 In order to build and deploy the services you should have installed `docker` and `docker-compose` and run: 
 ```
