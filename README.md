@@ -19,14 +19,25 @@ The deployment is tested in a normal laptop and it is deployed using docker comp
 
 ## Training
 
-In order to train the models, the first is to initialize the enviroment:
+In order to train the models, the first step is initializing the enviroment:
 ```
 conda create --name frontiers python=3.8 -y
 conda activate frontiers
 pip install -r requirements/requirements.txt
 ```
 
+Then the entire pipeline is executed with:
+```
+python src/main_train.py
+```
+As previosly introduced, the training of all the pipeline is both time and resources expensive. In order to reduce time, the user has two choices: use gpu or running only some part of the pipeline exluding some models. 
 
+The source folderis divided as:
+- `main_train.py`: the main training of all the models.
+- `preprocess/`: functions and algorithms to preprocess the text (principally for the keywords extraction).
+- `train/`: all the functions and algorithm to prepare the journals embeddings.
+- `evaluate/`: all the functions and algorithm to evaluate the journals embeddings.
+- `utils/`: some utils like Input/Output class.
 
 ## Using docker
 
