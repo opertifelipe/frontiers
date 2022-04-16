@@ -55,4 +55,4 @@ docker-compose -d up
 
 You access the web application at [http://172.18.0.3:8501/](http://172.18.0.3:8501/)
 
-In folder `docs/examples/` there some papers that could be tested for the prediction.
+In folder `docs/examples/` there are some papers that could be tested for the prediction.
