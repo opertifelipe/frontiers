@@ -30,17 +30,19 @@ else:
 
 model = st.selectbox(
      "Select the model",
-     ('SBERT', 'TFIDF', 'Word2Vec'))
+     ('TFIDF','SBERT', 'Word2Vec'))
 
 embedding_type = st.radio("Select the embedding type", 
-                                ["All document","Only keywords"], 
+                                ["Only keywords", "All document"], 
                                 index=0)     
 
 mapping_model = {'SBERT':'sbert', 'TFIDF':'tfidf', 'Word2Vec':'word2vec'}
 mapping_embedding_type = {'All document':'document', 'Only keywords':'keywords'}
 
-if text:
-    url = "http://api:8000/journal/recommendation"
+
+
+if st.button('Find journals'):
+    url = "http://localhost:8085/journal/recommendation"
     payload = {"text":text, 
                "model":mapping_model[model], 
                "embedding_type":mapping_embedding_type[embedding_type]}

@@ -18,7 +18,7 @@ from pandarallel import pandarallel
 import warnings
 warnings.filterwarnings("ignore")
 
-pandarallel.initialize(progress_bar=True)
+pandarallel.initialize(nb_workers=1, progress_bar=True)
 
 class ScientificPaper(BaseModel):
     text: str

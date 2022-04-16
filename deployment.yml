@@ -5,6 +5,8 @@ services:
       context: .
       dockerfile: api.Dockerfile
     image: api_frontiers
+    # ports:
+    #   - "8085:8085"
     volumes:
       - ./data:/data
 
@@ -14,7 +16,7 @@ services:
       dockerfile: app.Dockerfile
     image: app_frontiers
     ports:
-      - 8501:8501
+      - "8501:8501"
     volumes:
       - ./data:/data
     depends_on:
