@@ -1,77 +1,37 @@
-from src.utils.utils import IO
+from api.utils.utils import IO
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+from sentence_transformers import SentenceTransformer
+from functools import partial
+import torch
+ 
+journal_embeddings_document_sbert = IO(filename="journals_embeddings_document_sbert",folder="04_model",format_="pickle").load()
 
-journal_embeddings_keywords_word2vec = IO(filename="journals_embeddings_keywords_word2vec",folder="04_model",format_="pickle").load()
-journal_embeddings_keywords_tfidf = IO(filename="journals_embeddings_keywords_tfidf",folder="04_model",format_="pickle").load()
-journal_embeddings_keywords_sbert = IO(filename="journals_embeddings_keywords_sbert",folder="04_model",format_="pickle").load()
+if torch.cuda.is_available():
+    model = SentenceTransformer("all-mpnet-base-v2", device='cuda')
+else:
+    model = SentenceTransformer("all-mpnet-base-v2")
 
-journal_embeddings_document_word2vec = IO(filename="journals_embeddings__document_word2vec",folder="04_model",format_="pickle").load()
-journal_embeddings_document_tfidf = IO(filename="journals_embeddings__document_tfidf",folder="04_model",format_="pickle").load()
-journal_embeddings_document_sbert = IO(filename="journals_embeddings__document_sbert",folder="04_model",format_="pickle").load()
+async def create_embeddings_document(df):
+    def get_embeddings_document_sbert(text, model):
+        sentences = text.split(". ")
+        embeddings = model.encode(sentences)
+        return np.mean(embeddings, axis=0)                        
+    df["embeddings"] = df["text"].apply(partial(get_embeddings_document_sbert, model=model))
+    return df    
 
-
-def predict(df, embeddings_function, embedding_type, journal_embeddings, tf_idf_training=True):
-    df = embeddings_function(df, embedding_type, tf_idf_training)
+async def predict_document_sbert(df):
+    df = await create_embeddings_document(df)
     df = df.reset_index(drop=True)
     predictions = []
     for index, row in df.iterrows():
         cosine_sim = cosine_similarity(row["embeddings"].reshape(1,-1), 
-                                       np.stack(journal_embeddings["embeddings"].values))
+                                       np.stack(journal_embeddings_document_sbert["embeddings"].values))
         idx = (-cosine_sim[0]).argsort()[:3]
-        prediction = [journal_embeddings["journal"][idx[0]], 
-                      journal_embeddings["journal"][idx[1]], 
-                      journal_embeddings["journal"][idx[2]]]
+        prediction = [journal_embeddings_document_sbert["journal"][idx[0]], 
+                      journal_embeddings_document_sbert["journal"][idx[1]], 
+                      journal_embeddings_document_sbert["journal"][idx[2]]]
         predictions.append(prediction)
     df["prediction"] = predictions
     return df
-
-def predict_keyword_word2vec(df_test):    
-    df_evaluation = predict(df=df_test, 
-                            embeddings_function=create_embeddings_keywords,
-                            embedding_type="word2vec",
-                            journal_embeddings=journal_embeddings_keywords_word2vec)
-    return df_evaluation
-
-def predict_keyword_tfidf(df_test):
-    df_evaluation = predict(df=df_test, 
-                            embeddings_function=create_embeddings_keywords,
-                            embedding_type="tfidf",
-                            tf_idf_training=False,
-                            journal_embeddings=journal_embeddings_keywords_tfidf)
-    return df_evaluation
-
-
-def predict_keyword_sbert(df_test):
-    df_evaluation = predict(df=df_test, 
-                            embeddings_function=create_embeddings_keywords,
-                            embedding_type="sbert",
-                            journal_embeddings=journal_embeddings_keywords_sbert)
-
-    return df_evaluation
-
-
-
-def predict_document_word2vec(df_test):
-    df_evaluation = predict(df=df_test, 
-                            embeddings_function=create_embeddings_document,
-                            embedding_type="word2vec",
-                            journal_embeddings=journal_embeddings_document_word2vec)
-    return df_evaluation
-
-
-def predict_document_tfidf(df_test):
-    df_evaluation = predict(df=df_test, 
-                            embeddings_function=create_embeddings_document,
-                            embedding_type="tfidf",
-                            tf_idf_training=False,
-                            journal_embeddings=journal_embeddings_document_tfidf)
-    return df_evaluation
-
-def predict_document_sbert(df_test):
-    df_evaluation = predict(df=df_test, 
-                            embeddings_function=create_embeddings_document,
-                            embedding_type="sbert",
-                            journal_embeddings=journal_embeddings_document_sbert)
-    return df_evaluation
 

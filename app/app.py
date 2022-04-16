@@ -7,7 +7,6 @@ import json
 
 st.set_page_config(layout="wide")
 
-
 st.title('Frontiers Journal Recommendation')
 
 upload_insert = st.selectbox("Would you prefer to upload a pdf paper or insert a text", 
@@ -28,11 +27,10 @@ else:
             for page in doc:
                 text += page.get_text()
 
-if st.button('Find journals'):
-    url = "http://api:8085/journal/recommendation"
+if st.button('Find recommended journals'):
+    url = "http://api:8086/journal/recommendation"
     payload = {"text":text}
-
-
+    
     response = requests.request("POST", url, data=json.dumps(payload)).json()
     st.markdown(f"""
     **Recommendation:**: 
