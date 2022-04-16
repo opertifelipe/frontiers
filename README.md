@@ -39,6 +39,10 @@ The source folder is divided as:
 - `evaluate/`: all the functions and algorithms to evaluate the journals embeddings.
 - `utils/`: some utils like Input/Output class.
 
+OBS: If you have some problems with the execution, please check you have correctly set the PYTHONPATH. If you don't, you can set it as:
+```
+export PYTHONPATH=<your project path>
+```
 # Deployment
 
 The deployed algorithm is SBERT. During the training phase, SBERT performs better than all the other algorithms. Unfortunately, it is also the slowest. In case the application will need a fast response time, probably the best option will be the TFIDF.
