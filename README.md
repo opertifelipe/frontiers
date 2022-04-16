@@ -13,7 +13,7 @@ The main folders of the project are:
 - `api`: API code for the deployment.
 - `app`: front-end code for the deployment.
 
-During the training phase of all the models, I used a CentOS server machine with 40 cores, 30 Gb RAM, and an Nvidia Tesla V100 (with 16Gb RAM). With such configuration, the training of all the models and the evaluation lasted less than 1 hour. The code should run with both CPU or GPU, although I do not guarantee a short running time (not tested with CPU). Certainly, the pipeline could be reduced by training some models, but at the moment it can only be hard-coded by commenting on some part of the code.
+During the training phase of all the models, I used a CentOS server machine with 40 cores, 30 Gb RAM, and an Nvidia Tesla V100 (with 16Gb RAM). With such configuration, the training of all the models and the evaluation lasted less than 1 hour. The code should run with both CPU or GPU, although I do not guarantee a short running time (not tested with CPU). Certainly, the pipeline could be reduced by training only some models, but at the moment it can only be hard-coded by commenting on some part of the code.
 
 The deployment is tested on a normal laptop and it is deployed using docker-compose. No GPU is needed for the deployment.
 
