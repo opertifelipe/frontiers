@@ -27,7 +27,7 @@ else:
             for page in doc:
                 text += page.get_text()
 
-if st.button('Find recommended journals'):
+if st.button('Find'):
     url = "http://api:8000/journal/recommendation"
     payload = {"text":text}
     
