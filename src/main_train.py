@@ -16,7 +16,7 @@ from src.evaluate.evaluate import (evaluate_document_word2vec,
                                evaluate_document_sbert,
                                generate_baseline_evaluation)
 
-from src.utils.utils import load_data, IO
+from src.utils.utils import load_data, IO 
 from pandarallel import pandarallel
 
 import warnings
